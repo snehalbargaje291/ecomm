@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -89,6 +92,10 @@ const CategoryList = () => {
                       scale: 1.1,
                       y: -10,
                       color: "#FFD700",
+                    }}
+                    // onClick set the url to shop?category=category.id
+                    onClick={() => {
+                      navigate(`/shop?category=${category.name}`);
                     }}
                   >
                     {category.name}
