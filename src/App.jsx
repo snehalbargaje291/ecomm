@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home'; 
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
-import Error from './Components/Error';
+import Error from './pages/Error';
 
 function App() {
   useEffect(() => {
