@@ -55,7 +55,7 @@ const Cart = () => {
             <li className="py-12 text-center text-gray-500">
             <div className="flex flex-col items-center">
               <img
-                src="/public/bag.png"
+                src="/bag.png"
                 alt="Empty Cart"
                 className="w-48 h-48 mb-4 object-cover"
               />

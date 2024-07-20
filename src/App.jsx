@@ -5,9 +5,9 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from './Components/Navbar';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './Components/Home'; 
-import Shop from './Components/Shop';
-import Cart from './Components/Cart';
+import Home from './pages/Home'; 
+import Shop from './pages/Shop';
+import Cart from './pages/Cart';
 import Error from './Components/Error';
 
 function App() {

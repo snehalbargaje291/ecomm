@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Card from '../Components/Card';
-import CategoryList from './Categories';
+import CategoryList from '../Components/Categories';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 
 const ITEMS_PER_PAGE = 8; // Number of items to display per page

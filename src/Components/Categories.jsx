@@ -63,7 +63,7 @@ const CategoryList = () => {
                   damping: 6,
                   duration: 1,
                   ease: "easeOut",
-                  delay: index * 1,
+                  delay: index * 0.2,
                 }}
                 whileHover={{
                   backdropFilter: "blur(10px)",
