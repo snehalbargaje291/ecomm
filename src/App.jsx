@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home'; 
 import Shop from './Components/Shop';
 import Cart from './Components/Cart';
+import Error from './Components/Error';
 
 function App() {
   useEffect(() => {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="*" element={<Error />} />
       </Routes>
     </Router>
   );

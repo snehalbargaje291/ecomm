@@ -57,7 +57,7 @@ const CategoryList = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="p-4 bg-slate-900">
+    <div className="bg-slate-900">
       <motion.h2
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -73,14 +73,14 @@ const CategoryList = () => {
         onMouseUp={handleMouseUp}
         onMouseMove={handleMouseMove}
       >
-        <div className="flex justify-center items-center space-x-4 pt-14 pb-4">
+        <div className="flex justify-center items-center space-x-2 md:space-x-4 pt-14 pb-4">
           {categories.length === 0 ? (
             <p>No categories available.</p>
           ) : (
             categories.map((category, index) => (
               <motion.div
                 key={category.id}
-                className={`flex-shrink-0 relative w-40 h-40 bg-cover bg-center rounded-full bg-gray-300`}
+                className={`flex-shrink-0 relative w-16 h-16 md:h-32 md:w-32 lg:w-40 lg:h-40 bg-cover bg-center rounded-full bg-gray-300`}
                 style={{ backgroundImage: `url(${category.image})` }}
                 initial={{ y: 200, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -101,7 +101,7 @@ const CategoryList = () => {
                   transition={{ duration: 0.2 }}
                 >
                   <motion.h2
-                    className="text-lg font-semibold text-white"
+                    className="text-xs md:text-lg font-semibold overflow-hidden text-white"
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}

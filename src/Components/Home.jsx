@@ -25,7 +25,7 @@ const Home = () => {
     <div className="min-h-screen bg-slate-900">
       
       {/* Hero Section */}
-      <section className="relative bg-indigo-600 text-white overflow-hidden">
+      <section className="relative bg-slate-900 text-white overflow-hidden">
         <div className="absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2670&auto=format&fit=crop"
@@ -67,17 +67,17 @@ const Home = () => {
       </section>
 
       {/* Discount Section */}
-      <section className="overflow-hidden rounded-lg shadow-2xl md:grid md:grid-cols-3 bg-gray-50">
+      <section className="overflow-hidden rounded-lg shadow-2xl md:grid md:grid-cols-3 bg-slate-900">
         <img
           alt="Seasonal Discount"
           src="https://images.unsplash.com/photo-1611510338559-2f463335092c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
           className="h-64 w-full object-cover md:h-full"
         />
         <div className="p-4 text-center sm:p-6 md:col-span-2 lg:p-8 flex flex-col justify-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-gray-700">
+          <p className="text-sm font-semibold uppercase tracking-widest text-gray-300">
             Limited Time Offer
           </p>
-          <h2 className="mt-6 font-bold text-3xl sm:text-4xl lg:text-5xl">
+          <h2 className="mt-6 text-gray-300 font-bold text-3xl sm:text-4xl lg:text-5xl">
             Save 20% <span className="text-xl">On Orders Over $50</span>
           </h2>
           <a
@@ -99,10 +99,10 @@ const Home = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 100, damping: 5 }}
        className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-11/12 md:w-1/2 lg:w-1/3 relative">
+          <div className="bg-slate-800 border rounded-lg shadow-lg p-6 w-11/12 md:w-1/2 lg:w-1/3 relative">
             <button
               onClick={() => setPopoverVisible(false)}
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="absolute top-2 right-2 text-gray-500 hover:text-gray-300"
             >
               <svg
                 className="w-6 h-6"
@@ -119,13 +119,13 @@ const Home = () => {
                 />
               </svg>
             </button>
-            <h2 className="text-xl font-bold mb-4">Limited Time Offer!</h2>
-            <img
+            <h2 className="text-xl text-gray-300 font-bold mb-4">Limited Time Offer!</h2>
+            {/* <img
               alt="Seasonal Discount"
               src="https://images.unsplash.com/photo-1611510338559-2f463335092c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=928&q=80"
               className="w-full h-40 object-cover mb-4 rounded-lg"
-            />
-            <p className="text-lg font-semibold">Save 20% on Orders Over $50!</p>
+            /> */}
+            <p className="text-sm text-gray-200 uppercase">Save 20% on Orders Over $50!</p>
             <a
               onClick={handleClaimDiscount} // Add onClick handler
               href="#"

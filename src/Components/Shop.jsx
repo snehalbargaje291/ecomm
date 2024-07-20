@@ -46,11 +46,11 @@ const Shop = () => {
   }, []);
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-100 p-4 flex items-center justify-center">Loading...</div>;
+    return <div className="min-h-screen bg-slate-900 p-4 flex text-white items-center justify-center">Loading...</div>;
   }
 
   if (error) {
-    return <div className="min-h-screen bg-gray-100 p-4 flex items-center justify-center">Error: {error}</div>;
+    return <div className="min-h-screen bg-slate-900 p-4 flex items-center justify-center">Error: {error}</div>;
   }
 
   // Paginate products
@@ -100,7 +100,7 @@ const Shop = () => {
   </button>
   
   <span className="text-gray-300 font-medium">
-    {currentPage} of {totalPages}
+    {currentPage} / {totalPages}
   </span>
   
   <button
