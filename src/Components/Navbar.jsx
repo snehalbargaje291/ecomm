@@ -25,7 +25,7 @@ function Navbar() {
 
   return (
     <div className="text-gray-200 w-full bg-slate-900 h-20 px-4 flex justify-between items-center text-lg">
-      <img src="../src/assets/Bharatgologo.png" alt="Logo" />
+      <img src="public/Bharatgologo.png" alt="Logo" />
       <ul className="hidden md:flex items-center font-semibold text-sm">
         <li className="p-5">
           <Link to="/">Home</Link>

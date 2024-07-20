@@ -33,7 +33,7 @@ const Cart = () => {
   const total = subtotal + shipping;
 
   return (
-    <div className='flex justify-center bg-slate-900 border rounded-lg'>
+    <div className='flex justify-center bg-slate-900 md:border rounded-lg'>
       <div
         className="relative w-full bg-slate-900 shadow-lg rounded-lg p-6"
         aria-modal="true"
@@ -55,7 +55,7 @@ const Cart = () => {
             <li className="py-12 text-center text-gray-500">
             <div className="flex flex-col items-center">
               <img
-                src="../../src/assets/bag.png"
+                src="public/bag.png"
                 alt="Empty Cart"
                 className="w-48 h-48 mb-4 object-cover"
               />
