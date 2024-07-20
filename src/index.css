@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  top: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
