@@ -45,61 +45,60 @@ const CategoryList = () => {
         Shop By Categories
       </motion.h2>
 
-<div className="flex justify-center items-center">
-<div className="scroll-container space-x-2">
-        {categories.length === 0 ? (
-          <p>No categories available.</p>
-        ) : (
-          categories.map((category, index) => (
-            <motion.div
-              key={category.id}
-              className="card cursor-pointer relative w-16 h-16 md:h-32 md:w-32 lg:w-40 lg:h-40 bg-cover bg-center rounded-full bg-gray-300"
-              style={{ backgroundImage: `url(${category.image})` }}
-              initial={{ y: 200, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{
-                type: "spring",
-                stiffness: 50,
-                damping: 6,
-                duration: 1,
-                ease: "easeOut",
-                delay: index * 1,
-              }}
-              whileHover={{
-                backdropFilter: "blur(10px)",
-              }}
-              onHoverStart={() => setHoveredIndex(index)}
-              onHoverEnd={() => setHoveredIndex(null)}
-            >
+      <div className="flex justify-center items-center">
+        <div className="scroll-container space-x-2">
+          {categories.length === 0 ? (
+            <p>No categories available.</p>
+          ) : (
+            categories.map((category, index) => (
               <motion.div
-                className={`absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-full`}
-                animate={
-                  hoveredIndex !== null && hoveredIndex !== index
-                    ? { scale: 0.8, opacity: 0.6 }
-                    : { scale: 1, opacity: 1 }
-                }
-                transition={{ duration: 0.2 }}
+                key={category.id}
+                className="card cursor-pointer relative h-32 w-32 lg:w-40 lg:h-40 bg-cover bg-center rounded-full bg-gray-300"
+                style={{ backgroundImage: `url(${category.image})` }}
+                initial={{ y: 200, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 50,
+                  damping: 6,
+                  duration: 1,
+                  ease: "easeOut",
+                  delay: index * 1,
+                }}
+                whileHover={{
+                  backdropFilter: "blur(10px)",
+                }}
+                onHoverStart={() => setHoveredIndex(index)}
+                onHoverEnd={() => setHoveredIndex(null)}
               >
-                <motion.h2
-                  className="text-xs md:text-lg font-semibold overflow-hidden text-white"
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  whileHover={{
-                    scale: 1.1,
-                    y: -10,
-                    color: "#FFD700",
-                  }}
+                <motion.div
+                  className={`absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-full`}
+                  animate={
+                    hoveredIndex !== null && hoveredIndex !== index
+                      ? { scale: 0.8, opacity: 0.6 }
+                      : { scale: 1, opacity: 1 }
+                  }
+                  transition={{ duration: 0.2 }}
                 >
-                  {category.name}
-                </motion.h2>
+                  <motion.h2
+                    className="text-xs md:text-lg font-semibold overflow-hidden text-white"
+                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    whileHover={{
+                      scale: 1.1,
+                      y: -10,
+                      color: "#FFD700",
+                    }}
+                  >
+                    {category.name}
+                  </motion.h2>
+                </motion.div>
               </motion.div>
-            </motion.div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
-</div>
-      
     </div>
   );
 };
