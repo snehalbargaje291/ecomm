@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const CategoryList = () => {
@@ -6,10 +6,6 @@ const CategoryList = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
-  const scrollContainerRef = useRef(null);
-  const isDragging = useRef(false);
-  const startX = useRef(0);
-  const scrollLeft = useRef(0);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,24 +31,6 @@ const CategoryList = () => {
     fetchCategories();
   }, []);
 
-  const handleMouseDown = (e) => {
-    isDragging.current = true;
-    startX.current = e.pageX - scrollContainerRef.current.offsetLeft;
-    scrollLeft.current = scrollContainerRef.current.scrollLeft;
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX.current) * 2; // Scroll speed multiplier
-    scrollContainerRef.current.scrollLeft = scrollLeft.current - walk;
-  };
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -64,61 +42,64 @@ const CategoryList = () => {
         transition={{ duration: 0.8 }}
         className="font-mono font-bold text-center text-lg tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400"
       >
-                Shop By Categories
+        Shop By Categories
       </motion.h2>
-      <div
-        className="overflow-hidden cursor-grab"
-        ref={scrollContainerRef}
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseMove={handleMouseMove}
-      >
-        <div className="flex justify-center items-center space-x-2 md:space-x-4 pt-14 pb-4">
-          {categories.length === 0 ? (
-            <p>No categories available.</p>
-          ) : (
-            categories.map((category, index) => (
+
+<div className="flex justify-center items-center">
+<div className="scroll-container space-x-2">
+        {categories.length === 0 ? (
+          <p>No categories available.</p>
+        ) : (
+          categories.map((category, index) => (
+            <motion.div
+              key={category.id}
+              className="card cursor-pointer relative w-16 h-16 md:h-32 md:w-32 lg:w-40 lg:h-40 bg-cover bg-center rounded-full bg-gray-300"
+              style={{ backgroundImage: `url(${category.image})` }}
+              initial={{ y: 200, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                type: "spring",
+                stiffness: 50,
+                damping: 6,
+                duration: 1,
+                ease: "easeOut",
+                delay: index * 1,
+              }}
+              whileHover={{
+                backdropFilter: "blur(10px)",
+              }}
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            >
               <motion.div
-                key={category.id}
-                className={`flex-shrink-0 relative w-16 h-16 md:h-32 md:w-32 lg:w-40 lg:h-40 bg-cover bg-center rounded-full bg-gray-300`}
-                style={{ backgroundImage: `url(${category.image})` }}
-                initial={{ y: 200, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{type: "spring", stiffness: 50, damping: 6, duration: 1, ease: "easeOut", delay: index * 1 }}
-                whileHover={{
-                  backdropFilter: "blur(10px)",
-                }}
-                onHoverStart={() => setHoveredIndex(index)}
-                onHoverEnd={() => setHoveredIndex(null)}
+                className={`absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-full`}
+                animate={
+                  hoveredIndex !== null && hoveredIndex !== index
+                    ? { scale: 0.8, opacity: 0.6 }
+                    : { scale: 1, opacity: 1 }
+                }
+                transition={{ duration: 0.2 }}
               >
-                <motion.div
-                  className={`absolute inset-0 flex items-center justify-center bg-opacity-50 rounded-full`}
-                  animate={
-                    hoveredIndex !== null && hoveredIndex !== index
-                      ? { scale: 0.8, opacity: 0.6 }
-                      : { scale: 1, opacity: 1 }
-                  }
-                  transition={{ duration: 0.2 }}
+                <motion.h2
+                  className="text-xs md:text-lg font-semibold overflow-hidden text-white"
+                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  whileHover={{
+                    scale: 1.1,
+                    y: -10,
+                    color: "#FFD700",
+                  }}
                 >
-                  <motion.h2
-                    className="text-xs md:text-lg font-semibold overflow-hidden text-white"
-                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    whileHover={{
-                      scale: 1.1,
-                      y: -10,
-                      color: "#FFD700",
-                    }}
-                  >
-                    {category.name}
-                  </motion.h2>
-                </motion.div>
+                  {category.name}
+                </motion.h2>
               </motion.div>
-            ))
-          )}
-        </div>
+            </motion.div>
+          ))
+        )}
       </div>
+</div>
+      
     </div>
   );
 };
