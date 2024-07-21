@@ -1,28 +1,24 @@
-.clip-shape {
-    clip-path: path('M10,80 C40,10 65,10 95,80 S150,150 180,80 S250,40 280,80 V200 H10 Z');
-  }
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  align-items: center;
+  padding-top: 3.5rem;
+  padding-bottom: 1rem;
+  scroll-behavior: smooth;
+  white-space: nowrap; /* Prevent line breaks */
+}
 
-  .scroll-container {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    justify-content: start; 
-    align-items: center;
-    padding-top: 3.5rem; 
-    padding-bottom: 1rem; 
-    scroll-behavior: smooth; 
-  }
-  
-  .scroll-container::-webkit-scrollbar {
-    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
-  }
-  
-  .scroll-container {
-    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
-    scrollbar-width: none; /* Hide scrollbar for Firefox */
-  }
-  
-  .card {
-    flex-shrink: 0; /* Ensure cards don’t shrink */
-  }
-  
+.scroll-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+}
+
+.scroll-container {
+  -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
+.card {
+  flex-shrink: 0; /* Ensure cards don’t shrink */
+  margin-right: 1rem; /* Space between cards */
+}

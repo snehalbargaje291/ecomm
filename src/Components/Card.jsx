@@ -37,18 +37,18 @@ const Card = ({ product, addToCart }) => {
 
           <div className="relative p-4 bg-black bg-opacity-50 rounded-lg h-full flex flex-col justify-between">
             <div>
-              <p className="text-sm font-medium uppercase tracking-widest text-pink-500">
+              <p className="text-sm font-semibold uppercase tracking-widest text-pink-500">
                 {product.title}
               </p>
               <p className="text-xl font-bold text-white mt-2">
-                {product.price}
+              ${product.price}
               </p>
             </div>
 
             <div className="flex justify-center mt-auto">
               <button
                 onClick={handleOpenModal}
-                className="text-white flex justify-center items-center group/modal-btn p-2 border-2 border-white rounded-lg transition duration-300 hover:bg-white hover:text-black"
+                className="text-white flex justify-center items-center group/modal-btn p-1 border-2 border-white rounded-lg transition duration-300 hover:bg-white hover:text-black"
               >
                 View Product
               </button>

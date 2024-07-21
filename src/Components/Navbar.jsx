@@ -1,19 +1,19 @@
-// Navbar.js
 import React, { useState } from "react";
 import {
   AiOutlineClose,
   AiOutlineMenu,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { FiLogIn, FiLogOut } from "react-icons/fi";
+import { FiLogIn } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Cart from "../pages/Cart";
 import * as Popover from "@radix-ui/react-popover";
+import { useUser, UserButton } from "@clerk/clerk-react";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isSignedIn, user } = useUser();
 
   const handleNav = () => {
     setNav(!nav);
@@ -25,7 +25,9 @@ function Navbar() {
 
   return (
     <div className="text-gray-200 w-full bg-slate-900 h-20 px-4 flex justify-between items-center text-lg">
-      <img src="/Bharatgologo.png" alt="Logo" />
+      <Link to="/">
+        <img src="/Bharatgologo.png" alt="Logo" />
+      </Link>
       <ul className="hidden md:flex items-center font-semibold text-sm">
         <li className="p-5">
           <Link to="/">Home</Link>
@@ -44,19 +46,17 @@ function Navbar() {
               side="bottom"
               align="end"
               className="w-full rounded-md shadow-lg"
-              style={{zIndex:9999, width: "50rem"}}
+              style={{ zIndex: 9999, width: "50rem" }}
             >
               <Cart />
             </Popover.Content>
           </Popover.Root>
         </li>
         <li className="p-5">
-          {isLoggedIn ? (
-            <Link to="/logout">
-              <FiLogOut size={30} />
-            </Link>
+          {isSignedIn ? (
+            <UserButton afterSignOutUrl="/" />
           ) : (
-            <Link to="/login">
+            <Link to="/sign-in">
               <FiLogIn size={30} />
             </Link>
           )}
@@ -91,17 +91,15 @@ function Navbar() {
               </Link>
             </li>
             <li className="p-5">
-            <Link onClick={closeNav} to="/cart">
+              <Link onClick={closeNav} to="/cart">
                 <AiOutlineShoppingCart size={20} />
               </Link>
             </li>
             <li className="p-5">
-              {isLoggedIn ? (
-                <Link onClick={closeNav} to="/logout">
-                  <FiLogOut size={20} />
-                </Link>
+              {isSignedIn ? (
+                <UserButton afterSignOutUrl="/" />
               ) : (
-                <Link onClick={closeNav} to="/login">
+                <Link onClick={closeNav} to="/sign-in">
                   <FiLogIn size={20} />
                 </Link>
               )}

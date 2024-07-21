@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CategoryList from "../Components/Categories";
 import { motion } from "framer-motion";
+import BestSellersSection from "../Components/BestSellerSection";
 
 const Home = () => {
   const [isPopoverVisible, setPopoverVisible] = useState(true);
@@ -56,7 +57,7 @@ const Home = () => {
             whileHover={{ scale: 1.1 }}
             className="bg-yellow-400 text-gray-800 px-6 py-3 rounded-full font-semibold"
           >
-            Shop Now
+            <Link to="/shop">Shop Now</Link>
           </motion.button>
         </div>
       </section>
@@ -65,6 +66,8 @@ const Home = () => {
       <section id="categories" className="p-4">
         <CategoryList />
       </section>
+
+      <BestSellersSection/>
 
       {/* Discount Section */}
       <section className="overflow-hidden rounded-lg shadow-2xl md:grid md:grid-cols-3 bg-slate-900">
@@ -80,12 +83,13 @@ const Home = () => {
           <h2 className="mt-6 text-gray-300 font-bold text-3xl sm:text-4xl lg:text-5xl">
             Save 20% <span className="text-xl">On Orders Over $50</span>
           </h2>
-          <a
+          <button
             className="mt-8 inline-block w-full bg-black py-3 text-sm font-bold uppercase tracking-widest text-white"
             href="#"
           >
-            Claim Your Discount
-          </a>
+            <Link to="/shop">Claim Your Discount</Link>
+            
+          </button>
           <p className="mt-6 text-xs font-medium uppercase text-gray-500">
             Offer valid until March 31, 2024 *
           </p>
