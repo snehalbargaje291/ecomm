@@ -2,6 +2,7 @@ import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { BiCartAdd } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
+import { useContext } from "react";
 
 const Modal = ({
   show,
@@ -11,6 +12,7 @@ const Modal = ({
   setQuantity,
   addToCart,
 }) => {
+
   return (
     <Dialog.Root open={show} onOpenChange={onClose}>
       <Dialog.Portal>

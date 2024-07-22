@@ -1,16 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Modal from './Modal';
+import React, { useContext, useEffect, useState } from "react";
+import Modal from "./Modal";
+import { GlobalContext } from "../context/GlobalState";
 
-const Card = ({ product, addToCart }) => {
+const Card = ({ product }) => {
   const [showModal, setShowModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [currentIndex, setCurrentIndex] = useState(0);
   const images = product.images || []; // Fallback to an empty array if images are not provided
 
+  const { addCartItem } = useContext(GlobalContext);
+
+  console.log(product);
+
+  const addToCart = () => {
+    console.log("Adding to cart", product, quantity);
+    addCartItem({ ...product, quantity });
+    setShowModal(false);
+    setQuantity(1);
+  };
+
   useEffect(() => {
     if (images.length > 1) {
       const interval = setInterval(() => {
-        setCurrentIndex(prevIndex => (prevIndex + 1) % images.length);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
       }, 3000); // Change image every 3 seconds
 
       return () => clearInterval(interval); // Cleanup interval on component unmount
@@ -41,7 +53,7 @@ const Card = ({ product, addToCart }) => {
                 {product.title}
               </p>
               <p className="text-xl font-bold text-white mt-2">
-              ${product.price}
+                ${product.price}
               </p>
             </div>
 

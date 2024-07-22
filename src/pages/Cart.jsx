@@ -1,35 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { useUser } from "@clerk/clerk-react";
-import { Link } from "react-router-dom";
-
-const initialCartItems = [
-  {
-    id: 1,
-    image:
-      "https://images.unsplash.com/photo-1588484628369-dd7a85bfdc38?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHNuZWFrZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=150&q=60",
-    name: "Nike Air Max 2019",
-    size: "36EU - 4US",
-    price: "1259.00",
-    quantity: 1,
-  },
-  {
-    id: 2,
-    image:
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8c25lYWtlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=150&q=60",
-    name: "Nike Air Max 2019",
-    size: "36EU - 4US",
-    price: "1259.00",
-    quantity: 1,
-  },
-];
+import { Link, useNavigate } from "react-router-dom";
+import { GlobalContext } from "../context/GlobalState";
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const [cartItems, setCartItems] = useState([]);
   const { isSignedIn } = useUser();
+  const { removeCartItem } = useContext(GlobalContext);
+
+  const cartProducts = localStorage.getItem("cart");
 
   const handleRemoveItem = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    removeCartItem(id);
+    const updatedCartItems = cartItems.filter(item => item.id !== id);
+    setCartItems(updatedCartItems);
+    localStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
 
   const subtotal = cartItems.reduce(
@@ -39,6 +25,19 @@ const Cart = () => {
   const shipping = subtotal < 299 ? 50.0 : 0.0;
   const total = subtotal + shipping;
 
+  useEffect(() => {
+    if (cartProducts) {
+      setCartItems(JSON.parse(cartProducts));
+    } else {
+      setCartItems([]);
+    }
+  }, [cartProducts]);
+
+  const navigate = useNavigate();
+  const onHandleRoute = (route) => {
+    navigate(route);
+  }
+
   return (
     <div className="flex justify-center bg-slate-900 md:border rounded-lg">
       <div
@@ -47,14 +46,6 @@ const Cart = () => {
         role="dialog"
         tabIndex="-1"
       >
-        {/* <button
-          type="button"
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-400 transition-transform transform hover:scale-110"
-          aria-label="Close cart"
-        >
-          <CgClose/>
-        </button> */}
-
         <h2 className="text-2xl font-semibold text-gray-500 mb-6">
           Shopping Cart
         </h2>
@@ -86,14 +77,14 @@ const Cart = () => {
             cartItems.map((item) => (
               <li key={item.id} className="flex items-center gap-4 py-4">
                 <img
-                  src={item.image}
+                  src={item.images[0]}
                   alt={item.name}
                   className="w-20 h-20 object-cover rounded-lg shadow-sm"
                 />
 
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-500">
-                    {item.name}
+                    {item.title}
                   </h3>
                   <p className="text-sm text-gray-300">Size: {item.size}</p>
                   <p className="text-sm text-gray-300">Price: ${item.price}</p>
@@ -138,29 +129,28 @@ const Cart = () => {
             </div>
 
             <div className="mt-6 flex flex-col items-center gap-4">
-
               {isSignedIn ? (
-                <Link 
-                  to="/checkout"
+                <button
+                onClick={() => onHandleRoute('/checkout')}
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Checkout
-                </Link>
+                </button>
               ) : (
-                <Link
-                  to="/sign-in"
+                <button
+                onClick={() => onHandleRoute('/sign-in')}
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Sign in to Checkout
-                </Link>
+                </button>
               )}
 
-              <Link
-                to="/shop"
+              <button
+              onClick={() => onHandleRoute('/shop')}
                 className="text-sm text-gray-500 underline hover:text-gray-300"
               >
                 Continue Shopping
-              </Link>
+              </button>
             </div>
           </div>
         )}
