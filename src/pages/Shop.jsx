@@ -14,21 +14,65 @@ const Shop = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
 
   const api = "https://api.escuelajs.co/api/v1/products";
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(api);
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+      const data = await response.json();
+      const parsedData = data.map((product) => {
+        let images;
+        try {
+          images = JSON.parse(product.images[0]);
+        } catch (e) {
+          images = product.images;
+        }
+        return {
+          ...product,
+          images,
+        };
+      });
+      setAllProducts(parsedData);
+      setFilteredProducts(parsedData);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchProducts = async () => {
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    if (category) {
+      const filtered = allProducts.filter(
+        (product) => product.category.name === category
+      );
+      setFilteredProducts(filtered);
+      setCurrentPage(1);
+    } else {
+      setFilteredProducts(allProducts);
+    }
+  }, [category, allProducts]);
+
+  const handleSearch = async () => {
+    if (searchTerm.trim() !== '') {
       try {
-        const response = await fetch(api);
+        const response = await fetch(`https://api.escuelajs.co/api/v1/products/?title=${searchTerm}`);
         if (!response.ok) {
           throw new Error("Failed to fetch products");
         }
@@ -45,28 +89,25 @@ const Shop = () => {
             images,
           };
         });
-        setAllProducts(parsedData);
         setFilteredProducts(parsedData);
+        setCurrentPage(1); 
       } catch (error) {
         setError(error.message);
-      } finally {
-        setLoading(false);
       }
-    };
-
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    if (category) {
-      const filtered = allProducts.filter(
-        (product) => product.category.name === category
-      );
-      setFilteredProducts(filtered);
     } else {
       setFilteredProducts(allProducts);
     }
-  }, [category, allProducts]);
+  };
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   if (loading) {
     return (
@@ -117,90 +158,25 @@ const Shop = () => {
                   type="text"
                   placeholder="Search products..."
                   className="w-full px-2 text-sm border-b bg-transparent text-gray-300 focus:outline-none focus:ring-2 focus:ring-transparent mx-2"
+                  value={searchTerm}
+                  onChange={handleInputChange}
+                  onKeyDown={handleKeyDown}
                 />
-                <button ><BiSearch size={20}/></button>
+                <button onClick={handleSearch}><BiSearch size={20} /></button>
               </div>
 
               {/* Filter Dropdown */}
-              {/* <div className="relative inline-block text-left md:w-1/2 mt-4 md:mt-0">
+              <div className="relative w-full md:w-1/2">
                 <button
                   type="button"
-                  className="inline-flex items-center text-sm font-medium text-gray-300 hover:text-gray-100"
-                  id="filter-button"
-                  aria-expanded={isDropdownOpen}
-                  aria-haspopup="true"
-                  onClick={toggleDropdown}
-                >
-                  Filter by
-                  <svg
-                    className={`-mr-1 ml-1 h-5 w-5 text-gray-400 transition-transform ${
-                      isDropdownOpen ? "rotate-180" : ""
-                    }`}
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-
-                {isDropdownOpen && (
-                  <div
-                    className="absolute right-0 m-4 mt-2 w-56 origin-top-right rounded-lg bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu"
-                    aria-orientation="vertical"
-                    aria-labelledby="filter-button"
-                    tabIndex="-1"
-                    style={{ zIndex: 9999 }}
-                  >
-                    <div className="py-1">
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        Filter by title
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        Filter by price
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        Filter by price range
-                      </a>
-                      <a
-                        href="#"
-                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                        role="menuitem"
-                        tabIndex="-1"
-                      >
-                        Filter by category
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div> */}
-              <div className="relative w-full md:w-1/2">
-              <button
-                  type="button"
                   className="inline-flex border justify-center p-2 rounded-lg w-full items-center text-sm font-medium text-gray-300 hover:text-gray-100"
+                  onClick={() => {
+                    setFilteredProducts(allProducts);
+                    setSearchTerm('');
+                  }}
                 >
                   View All
-                  </button>
+                </button>
               </div>
             </div>
           </div>

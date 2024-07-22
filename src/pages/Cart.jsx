@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MdDeleteSweep } from "react-icons/md";
 import { useUser } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const initialCartItems = [
   {
@@ -139,27 +140,27 @@ const Cart = () => {
             <div className="mt-6 flex flex-col items-center gap-4">
 
               {isSignedIn ? (
-                <a
-                  href="#"
+                <Link 
+                  to="/checkout"
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Checkout
-                </a>
+                </Link>
               ) : (
-                <a
-                  href="/sign-in"
+                <Link
+                  to="/sign-in"
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Sign in to Checkout
-                </a>
+                </Link>
               )}
 
-              <a
-                href="#"
+              <Link
+                to="/shop"
                 className="text-sm text-gray-500 underline hover:text-gray-300"
               >
                 Continue Shopping
-              </a>
+              </Link>
             </div>
           </div>
         )}

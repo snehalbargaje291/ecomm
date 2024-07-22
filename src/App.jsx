@@ -9,9 +9,10 @@ import Home from './pages/Home';
 import Shop from './pages/Shop';
 import Cart from './pages/Cart';
 import Error from './pages/Error';
-import SignUpp from './pages/SignUpp';
-import SignInn from './pages/SignInn';
+import SignUpp from './pages/SignUp';
+import SignInn from './pages/SignIn';
 import Footer from './Components/Footer';
+import Checkout from './pages/Checkout';
 
 function App() {
   useEffect(() => {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/sign-up" element={<SignUpp />} />
         <Route path="/sign-in" element={<SignInn />} />
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
