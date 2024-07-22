@@ -6,7 +6,7 @@ const Card = ({ product }) => {
   const [showModal, setShowModal] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const images = product.images || []; // Fallback to an empty array if images are not provided
+  const images = product.images || []; 
 
   const { addCartItem } = useContext(GlobalContext);
 

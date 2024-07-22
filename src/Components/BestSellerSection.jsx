@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
-import BestSellerCard from "./BestSellerCard"; // Adjust the path as necessary
 import { Link } from "react-router-dom";
+import Card from "./Card";
 
 const BestSellersSection = () => {
   const [bestSellers, setBestSellers] = useState([]);
@@ -19,7 +19,19 @@ const BestSellersSection = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setBestSellers(data.slice(0, 8));
+        const parsedData = data.map((product) => {
+          let images;
+          try {
+            images = JSON.parse(product.images[0]);
+          } catch (e) {
+            images = product.images;
+          }
+          return {
+            ...product,
+            images,
+          };
+        });
+        setBestSellers(parsedData);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -80,15 +92,13 @@ const BestSellersSection = () => {
       >
         <div className="flex space-x-4">
           {bestSellers.map((item) => (
-            <BestSellerCard
-              key={item.id}
-              item={item}
-            />
+            <Card key={item.id} product={item} />
           ))}
         </div>
+        
         <button className="w-full mx-4 px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
-        <Link to="/shop">View All</Link>
-      </button>
+          <Link to="/shop">View All</Link>
+        </button>
       </div>
     </div>
   );
