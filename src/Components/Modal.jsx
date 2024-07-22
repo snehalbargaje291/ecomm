@@ -25,14 +25,15 @@ const Modal = ({
             </Dialog.Close>
             <div className="flex flex-col md:flex-row items-center justify-center">
               <div className="mx-2 flex flex-col items-center justify-center lg:w-1/2">
-                <Dialog.Title className="text-xl text-gray-200 font-semibold mb-4 text-center">
-                  {product.title}
+                <Dialog.Title className="text-xl text-yellow-400 font-semibold mb-4 text-center">
+                  {product.category.name}
                 </Dialog.Title>
                 <img
                   alt="Product"
                   src={product.images[0]}
                   className="w-32 md:w-40 lg:w-48 h-auto object-cover rounded-lg"
                 />
+                <h2 className="text-md text-gray-200 font-semibold mt-4 text-center">{product.title}</h2>
               </div>
               <div className="w-full md:w-1/2 md:pl-4 mt-4 md:mt-0">
                 <p className="text-gray-400 mb-4 text-xs sm:text-sm text-center">

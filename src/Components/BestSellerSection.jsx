@@ -13,13 +13,13 @@ const BestSellersSection = () => {
     const fetchBestSellers = async () => {
       try {
         const response = await fetch(
-          "https://api.escuelajs.co/api/v1/products?offset=0&limit=10"
+          "https://api.escuelajs.co/api/v1/products?offset=0&limit=8"
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setBestSellers(data.slice(0, 10));
+        setBestSellers(data.slice(0, 8));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -69,7 +69,7 @@ const BestSellersSection = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="bg-slate-900">
+    <div className="bg-slate-900 mb-10 md:mb-20">
       <h2 className="font-mono font-bold text-center text-lg tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400">
         Best Sellers
       </h2>

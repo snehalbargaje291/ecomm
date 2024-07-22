@@ -11,9 +11,9 @@ const BestSellerCard = ({ item }) => {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === item.images.length - 1 ? 0 : prevIndex + 1
       );
-    }, 2000); // Change image every 2 seconds
+    }, 2000); 
 
-    return () => clearInterval(interval); // Clean up interval on component unmount
+    return () => clearInterval(interval); 
   }, [item.images.length]);
 
   const handleOpenModal = () => {
@@ -25,9 +25,7 @@ const BestSellerCard = ({ item }) => {
   };
 
   const addToCart = (product, quantity) => {
-    // Example function to handle adding items to the cart
     console.log(`Added ${quantity} of ${product.title} to cart.`);
-    // You can extend this to actually add the item to a cart or state management
   };
 
   return (

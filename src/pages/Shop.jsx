@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import Card from '../Components/Card';
-import CategoryList from '../Components/Categories';
-import { FcNext, FcPrevious } from 'react-icons/fc';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import Card from "../Components/Card";
+import CategoryList from "../Components/Categories";
+import { FcNext, FcPrevious } from "react-icons/fc";
+import { useSearchParams } from "react-router-dom";
+import { BiSearch } from "react-icons/bi";
 
-const ITEMS_PER_PAGE = 8; 
+const ITEMS_PER_PAGE = 8;
 
 const Shop = () => {
   const [allProducts, setAllProducts] = useState([]);
@@ -15,7 +16,7 @@ const Shop = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const [searchParams] = useSearchParams();
-  const category = searchParams.get('category');
+  const category = searchParams.get("category");
 
   const api = "https://api.escuelajs.co/api/v1/products";
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -32,7 +33,7 @@ const Shop = () => {
           throw new Error("Failed to fetch products");
         }
         const data = await response.json();
-        const parsedData = data.map(product => {
+        const parsedData = data.map((product) => {
           let images;
           try {
             images = JSON.parse(product.images[0]);
@@ -41,7 +42,7 @@ const Shop = () => {
           }
           return {
             ...product,
-            images
+            images,
           };
         });
         setAllProducts(parsedData);
@@ -58,7 +59,9 @@ const Shop = () => {
 
   useEffect(() => {
     if (category) {
-      const filtered = allProducts.filter(product => product.category.name === category);
+      const filtered = allProducts.filter(
+        (product) => product.category.name === category
+      );
       setFilteredProducts(filtered);
     } else {
       setFilteredProducts(allProducts);
@@ -66,11 +69,19 @@ const Shop = () => {
   }, [category, allProducts]);
 
   if (loading) {
-    return <div className="min-h-screen bg-slate-900 p-4 flex text-white items-center justify-center">Loading...</div>;
+    return (
+      <div className="min-h-screen bg-slate-900 p-4 flex text-white items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="min-h-screen bg-slate-900 p-4 flex items-center justify-center">Error: {error}</div>;
+    return (
+      <div className="min-h-screen bg-slate-900 p-4 flex items-center justify-center">
+        Error: {error}
+      </div>
+    );
   }
 
   // Paginate products
@@ -90,135 +101,164 @@ const Shop = () => {
         <h1 className="font-mono font-bold text-center text-3xl tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400">
           Shop
         </h1>
-        <p className="text-center text-gray-200 mb-4">Welcome to the shop section! Explore our products below.</p>
+        <p className="text-center text-gray-200 mb-4">
+          Welcome to the shop section! Explore our products below.
+        </p>
         <CategoryList />
-        <div className='my-10'>
-        <h1 className="font-mono font-bold text-center text-lg tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400">
-          {category ? `Products in ${category}` : 'All Products'}
-        </h1>
-        <div className='flex flex-row justify-end items-center mx-20 text-white'>
-        <div className="flex flex-col md:flex-row items-center justify-between p-4 md:gap-6 bg-slate-900">
-      {/* Search Bar */}
-      <div className="relative w-full md:w-1/2">
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="w-full px-4 py-2 text-sm border border-gray-700 bg-slate-800 text-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
-      </div>
+        <div className="my-10">
+          <h1 className="font-mono font-bold text-center text-lg tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400">
+            {category ? `Products in ${category}` : "All Products"}
+          </h1>
+          <div className="flex flex-row justify-center md:justify-end items-center lg:mx-20 text-white">
+            <div className="flex flex-col md:flex-row items-center justify-between p-4 gap-4 bg-slate-900">
+              {/* Search Bar */}
+              <div className="relative flex flex-row w-full">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="w-full px-2 text-sm border-b bg-transparent text-gray-300 focus:outline-none focus:ring-2 focus:ring-transparent mx-2"
+                />
+                <button ><BiSearch size={20}/></button>
+              </div>
 
-      {/* Filter Dropdown */}
-      <div className="relative inline-block text-left md:w-1/2 mt-4 md:mt-0">
-        <button
-          type="button"
-          className="inline-flex items-center text-sm font-medium text-gray-300 hover:text-gray-100"
-          id="filter-button"
-          aria-expanded={isDropdownOpen}
-          aria-haspopup="true"
-          onClick={toggleDropdown}
-        >
-          Filter by
-          <svg
-            className={`-mr-1 ml-1 h-5 w-5 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
+              {/* Filter Dropdown */}
+              {/* <div className="relative inline-block text-left md:w-1/2 mt-4 md:mt-0">
+                <button
+                  type="button"
+                  className="inline-flex items-center text-sm font-medium text-gray-300 hover:text-gray-100"
+                  id="filter-button"
+                  aria-expanded={isDropdownOpen}
+                  aria-haspopup="true"
+                  onClick={toggleDropdown}
+                >
+                  Filter by
+                  <svg
+                    className={`-mr-1 ml-1 h-5 w-5 text-gray-400 transition-transform ${
+                      isDropdownOpen ? "rotate-180" : ""
+                    }`}
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
 
-        {isDropdownOpen && (
-          <div
-            className="absolute right-0 m-4 mt-2 w-56 origin-top-right rounded-lg bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="filter-button"
-            tabIndex="-1"
-            style={{zIndex:9999}}
-          >
-            <div className="py-1">
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                role="menuitem"
-                tabIndex="-1"
-              >
-                Filter by title
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                role="menuitem"
-                tabIndex="-1"
-              >
-                Filter by price
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                role="menuitem"
-                tabIndex="-1"
-              >
-                Filter by price range
-              </a>
-              <a
-                href="#"
-                className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
-                role="menuitem"
-                tabIndex="-1"
-              >
-                Filter by category
-              </a>
+                {isDropdownOpen && (
+                  <div
+                    className="absolute right-0 m-4 mt-2 w-56 origin-top-right rounded-lg bg-slate-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="filter-button"
+                    tabIndex="-1"
+                    style={{ zIndex: 9999 }}
+                  >
+                    <div className="py-1">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
+                        role="menuitem"
+                        tabIndex="-1"
+                      >
+                        Filter by title
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
+                        role="menuitem"
+                        tabIndex="-1"
+                      >
+                        Filter by price
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
+                        role="menuitem"
+                        tabIndex="-1"
+                      >
+                        Filter by price range
+                      </a>
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-300 hover:bg-slate-700"
+                        role="menuitem"
+                        tabIndex="-1"
+                      >
+                        Filter by category
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div> */}
+              <div className="relative w-full md:w-1/2">
+              <button
+                  type="button"
+                  className="inline-flex border justify-center p-2 rounded-lg w-full items-center text-sm font-medium text-gray-300 hover:text-gray-100"
+                >
+                  View All
+                  </button>
+              </div>
             </div>
           </div>
-        )}
-      </div>
-    </div>
-        </div>
-        <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:m-6 lg:m-10 gap-4'>
-          {paginatedProducts.map((item) => (
-            <motion.div
-              key={item.id}
-              className='relative'
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <Card product={item} />
-            </motion.div>
-          ))}
-        </div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:m-6 lg:m-10 gap-4">
+            {paginatedProducts.map((item) => (
+              <motion.div
+                key={item.id}
+                className="relative"
+                data-aos="fade-up"
+                data-aos-delay="200"
+              >
+                <Card product={item} />
+              </motion.div>
+            ))}
+          </div>
+          {totalPages === 0 && (
+            <div className="flex flex-col items-center justify-center mt-10 p-6 bg-slate-900">
+              <p className="text-lg font-medium text-gray-300">
+                No products available!
+              </p>
+              <p className="text-sm text-gray-500">
+                Please check back later or try a different category.
+              </p>
+            </div>
+          )}
 
-        {/* Pagination Controls */}
-        <div className="flex items-center justify-center mt-6 space-x-2">
-          <button
-            onClick={() => setCurrentPage(page => Math.max(page - 1, 1))}
-            className={`flex items-center justify-center p-2 text-white rounded-full hover:bg-gray-700 transition duration-300 ease-in-out disabled:opacity-50 ${currentPage === 1 ? 'hidden' : ''}`}
-            disabled={currentPage === 1}
-          >
-            <FcPrevious/>
-            <span className="sr-only">Previous</span>
-          </button>
-          
-          <span className="text-gray-300 font-medium">
-            {currentPage} / {totalPages}
-          </span>
-          
-          <button
-            onClick={() => setCurrentPage(page => Math.min(page + 1, totalPages))}
-            className={`flex items-center justify-center p-2 text-white rounded-full hover:bg-gray-700 transition duration-300 ease-in-out disabled:opacity-50 ${currentPage === totalPages ? 'hidden' : ''}`}
-            disabled={currentPage === totalPages}
-          >
-            <FcNext/>
-            <span className="sr-only">Next</span>
-          </button>
-        </div>
-        </div>
+          {totalPages > 0 && (
+            <div className="flex items-center justify-center mt-6 space-x-2">
+              <button
+                onClick={() => setCurrentPage((page) => Math.max(page - 1, 1))}
+                className={`flex items-center justify-center p-2 text-white rounded-full hover:bg-gray-700 transition duration-300 ease-in-out disabled:opacity-50 ${
+                  currentPage === 1 ? "hidden" : ""
+                }`}
+                disabled={currentPage === 1}
+              >
+                <FcPrevious />
+                <span className="sr-only">Previous</span>
+              </button>
 
+              <span className="text-gray-300 font-medium">
+                {currentPage} / {totalPages}
+              </span>
+
+              <button
+                onClick={() =>
+                  setCurrentPage((page) => Math.min(page + 1, totalPages))
+                }
+                className={`flex items-center justify-center p-2 text-white rounded-full hover:bg-gray-700 transition duration-300 ease-in-out disabled:opacity-50 ${
+                  currentPage === totalPages ? "hidden" : ""
+                }`}
+                disabled={currentPage === totalPages}
+              >
+                <FcNext />
+                <span className="sr-only">Next</span>
+              </button>
+            </div>
+          )}
+        </div>
       </motion.div>
     </div>
   );
