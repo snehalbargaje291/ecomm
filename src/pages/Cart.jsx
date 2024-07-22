@@ -130,27 +130,27 @@ const Cart = () => {
 
             <div className="mt-6 flex flex-col items-center gap-4">
               {isSignedIn ? (
-                <button
-                onClick={() => onHandleRoute('/checkout')}
+                <a
+                href="/checkout"
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Checkout
-                </button>
+                </a>
               ) : (
-                <button
-                onClick={() => onHandleRoute('/sign-in')}
+                <a
+                href="/sign-in"
                   className="block rounded bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600 transition"
                 >
                   Sign in to Checkout
-                </button>
+                </a>
               )}
 
-              <button
-              onClick={() => onHandleRoute('/shop')}
+              <a
+              href="/shop"
                 className="text-sm text-gray-500 underline hover:text-gray-300"
               >
                 Continue Shopping
-              </button>
+              </a>
             </div>
           </div>
         )}
