@@ -69,7 +69,7 @@ const BestSellersSection = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="bg-slate-900">
       <h2 className="font-mono font-bold text-center text-lg tracking-wider text-gray-300 uppercase rounded-full bg-gray-accent-400">
         Best Sellers
       </h2>
