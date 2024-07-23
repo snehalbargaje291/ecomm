@@ -15,6 +15,7 @@ import Footer from "./Components/Footer";
 import Checkout from "./pages/Checkout";
 import { GlobalProvider } from "./context/GlobalState";
 import { Toaster } from "react-hot-toast";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/sign-up" element={<SignUpp />} />
           <Route path="/sign-in" element={<SignInn />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/myorders" element={<MyOrders />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Toaster

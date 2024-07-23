@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   AiOutlineClose,
   AiOutlineMenu,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-import { FiLogIn } from "react-icons/fi";
+import { FiLogIn, FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Cart from "../pages/Cart";
 import * as Popover from "@radix-ui/react-popover";
-import { useUser, UserButton } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
+import { GlobalContext } from "../context/GlobalState";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
+  const { clearCart } = useContext(GlobalContext);
   const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
 
   const handleNav = () => {
     setNav(!nav);
@@ -21,6 +24,11 @@ function Navbar() {
 
   const closeNav = () => {
     setNav(false);
+  };
+
+  const handleLogout = async () => {
+    clearCart(); // Clear cart items
+    await signOut(); // Perform the logout
   };
 
   return (
@@ -54,10 +62,15 @@ function Navbar() {
         </li>
         <li className="p-5">
           {isSignedIn ? (
-            <UserButton afterSignOutUrl="/" />
+            <button
+              onClick={handleLogout}
+              className="flex items-center p-0 bg-transparent border-none"
+            >
+              <FiLogOut className="mr-1" size={20}/>Logout
+            </button>
           ) : (
-            <Link to="/sign-in">
-              <FiLogIn size={30} />
+            <Link to="/sign-in" className="flex items-center p-2 rounded-lg bg-transparent border">
+              Sign In
             </Link>
           )}
         </li>
@@ -66,7 +79,7 @@ function Navbar() {
         <motion.div
           key={nav ? "close" : "menu"}
           initial={{ rotate: 0 }}
-          animate={{ rotate: nav ? 360 : 0 }}
+          animate={{ rotate: nav ? 360 : 360 }}
           transition={{ type: "spring", stiffness: 200, damping: 10 }}
         >
           {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
@@ -97,10 +110,15 @@ function Navbar() {
             </li>
             <li className="p-5">
               {isSignedIn ? (
-                <UserButton afterSignOutUrl="/" />
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center p-0 bg-transparent border-none"
+                >
+                  <FiLogOut className="mr-1" size={15}/> Logout
+                </button>
               ) : (
-                <Link onClick={closeNav} to="/sign-in">
-                  <FiLogIn size={20} />
+                <Link onClick={closeNav} to="/sign-in" className="flex items-center p-2 rounded-lg bg-transparent border-none">
+                  Sign In
                 </Link>
               )}
             </li>

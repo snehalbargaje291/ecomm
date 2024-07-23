@@ -9,7 +9,7 @@ const SignUpp = () => {
       animate={{ x: 0 }} 
       transition={{ type: "spring", stiffness: 30 }}
        className='flex justify-center bg-slate-900 items-center'>
-      <SignUp path="/sign-up" routing="path" signInUrl="/sign-in" />
+      <SignUp path="/sign-up" redirectUrl=""   routing="path" signInUrl="/sign-in" />
     </motion.div>
   )
 }
