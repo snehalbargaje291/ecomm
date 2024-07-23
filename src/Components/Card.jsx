@@ -10,10 +10,10 @@ const Card = ({ product }) => {
 
   const { addCartItem } = useContext(GlobalContext);
 
-  console.log(product);
+  // console.log(product);
 
   const addToCart = () => {
-    console.log("Adding to cart", product, quantity);
+    // console.log("Adding to cart", product, quantity);
     addCartItem({ ...product, quantity });
     setShowModal(false);
     setQuantity(1);

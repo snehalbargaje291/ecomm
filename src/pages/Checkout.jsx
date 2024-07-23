@@ -20,7 +20,7 @@ export default function Checkout() {
   const onSubmit = () => {
     clearCart();
     toast.success('Order Successful!');
-    console.log("Checkout submitted");
+    // console.log("Checkout submitted");
     navigate("/myorders");
   };
 
