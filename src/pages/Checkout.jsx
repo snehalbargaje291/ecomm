@@ -1,17 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Label } from "../Components/ui/Label";
 import { Input } from "../Components/ui/Input";
 import { cn } from "../utils";
+import { GlobalContext } from "../context/GlobalState";
+import { useForm } from "react-hook-form";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const { clearCart } = useContext(GlobalContext);
+  const { register, handleSubmit } = useForm();
 
   const handlePaymentMethodChange = (method) => {
     setPaymentMethod(method);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const onSubmit = () => {
+    clearCart();
+    toast.success('Order Successfull!')
     console.log("Checkout submitted");
   };
 
@@ -24,29 +30,29 @@ export default function Checkout() {
         Complete your purchase by filling out the form below.
       </p>
 
-      <form className="my-8" onSubmit={handleSubmit}>
+      <form className="my-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="firstname" className="text-gray-300">First Name</Label>
-            <Input id="firstname" placeholder="John" type="text" />
+            <Input id="firstname" placeholder="John" type="text" {...register("firstname")} required/>
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lastname" className="text-gray-300">Last Name</Label>
-            <Input id="lastname" placeholder="Doe" type="text" />
+            <Input id="lastname" placeholder="Doe" type="text" {...register("lastname")} required/>
           </LabelInputContainer>
         </div>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="email" className="text-gray-300">Email Address</Label>
-          <Input id="email" placeholder="johndoe@example.com" type="email" />
+          <Input id="email" placeholder="johndoe@example.com" type="email" {...register ("email")} required/>
         </LabelInputContainer>
         <LabelInputContainer className="mb-4">
           <Label htmlFor="address" className="text-gray-300">Shipping Address</Label>
-          <Input id="address" placeholder="123 Main St, City, Country" type="text" />
+          <Input id="address" placeholder="123 Main St, City, Country" type="text" {...register("address")} required/>
         </LabelInputContainer>
 
         <LabelInputContainer className="mb-4">
           <Label htmlFor="billing-address" className="text-gray-300">Billing Address (if different)</Label>
-          <Input id="billing-address" placeholder="456 Another St, City, Country" type="text" />
+          <Input id="billing-address" placeholder="456 Another St, City, Country" type="text" {...register("billing-address")}/>
         </LabelInputContainer>
 
         {/* Payment Method Selection */}
@@ -83,16 +89,16 @@ export default function Checkout() {
           <div className="mb-4">
             <LabelInputContainer className="mb-2">
               <Label htmlFor="cardnumber" className="text-gray-300">Card Number</Label>
-              <Input id="cardnumber" placeholder="1234 5678 9012 3456" type="text" />
+              <Input id="cardnumber" placeholder="1234 5678 9012 3456" type="text" {...register("cardnumber")} required/>
             </LabelInputContainer>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <LabelInputContainer className="flex-1">
                 <Label htmlFor="expiration" className="text-gray-300">Expiration Date</Label>
-                <Input id="expiration" placeholder="MM/YY" type="text" />
+                <Input id="expiration" placeholder="MM/YY" type="text" {...register("expiration")} required/>
               </LabelInputContainer>
               <LabelInputContainer className="flex-1">
                 <Label htmlFor="cvv" className="text-gray-300">CVV</Label>
-                <Input id="cvv" placeholder="123" type="text" />
+                <Input id="cvv" placeholder="123" type="text" {...register("cvv")} required/>
               </LabelInputContainer>
             </div>
           </div>
@@ -101,7 +107,7 @@ export default function Checkout() {
         {paymentMethod === "upi" && (
           <LabelInputContainer className="mb-4">
             <Label htmlFor="upi-id" className="text-gray-300">UPI ID</Label>
-            <Input id="upi-id" placeholder="example@upi" type="text" />
+            <Input id="upi-id" placeholder="example@upi" type="text" {...register("upi-id")} required/>
           </LabelInputContainer>
         )}
 

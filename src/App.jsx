@@ -14,6 +14,7 @@ import SignInn from "./pages/SignIn";
 import Footer from "./Components/Footer";
 import Checkout from "./pages/Checkout";
 import { GlobalProvider } from "./context/GlobalState";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   useEffect(() => {
@@ -33,6 +34,10 @@ function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="*" element={<Error />} />
         </Routes>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
         <Footer />
       </Router>
     </GlobalProvider>

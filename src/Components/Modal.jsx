@@ -3,6 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { BiCartAdd } from "react-icons/bi";
 import { MdClose } from "react-icons/md";
 import { useContext } from "react";
+import toast from "react-hot-toast";
 
 const Modal = ({
   show,
@@ -74,6 +75,7 @@ const Modal = ({
                   <button
                     onClick={() => {
                       addToCart(product, quantity);
+                      toast.success('Added to cart');
                       onClose();
                     }}
                     className="bg-gray-800 text-white p-2 rounded-md flex items-center hover:bg-teal-600 transition"
