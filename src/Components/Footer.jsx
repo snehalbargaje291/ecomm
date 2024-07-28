@@ -1,5 +1,5 @@
 import React from "react";
-import { BsGithub, BsLinkedin } from "react-icons/bs";
+import { BsBagCheck, BsGithub, BsLinkedin } from "react-icons/bs";
 import { MdMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 
@@ -93,8 +93,8 @@ const Footer = () => {
         <hr className="my-4 border-gray-200 md:my-6 dark:border-gray-700" />
 
         <div className="flex items-center justify-between">
-          <Link to="/"> 
-            <img className="w-auto h-16" src="/Bharatgologo.png" alt="Logo" />
+          <Link to="/" className="text-gray-400 flex gap-2 justify-center items-center"> 
+            eComm<BsBagCheck size={30}/>
           </Link>
 
           <div className="flex -mx-2">

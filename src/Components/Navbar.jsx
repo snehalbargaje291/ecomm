@@ -11,11 +11,12 @@ import Cart from "../pages/Cart";
 import * as Popover from "@radix-ui/react-popover";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { GlobalContext } from "../context/GlobalState";
+import { BsBagCheck } from "react-icons/bs";
 
 function Navbar() {
   const [nav, setNav] = useState(false);
   const { clearCart } = useContext(GlobalContext);
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn} = useUser();
   const { signOut } = useClerk();
 
   const handleNav = () => {
@@ -27,14 +28,14 @@ function Navbar() {
   };
 
   const handleLogout = async () => {
-    clearCart(); // Clear cart items
-    await signOut(); // Perform the logout
+    clearCart(); 
+    await signOut(); 
   };
 
   return (
     <div className="text-gray-200 w-full bg-slate-900 h-20 px-4 flex justify-between items-center text-lg">
-      <Link to="/">
-        <img src="/Bharatgologo.png" alt="Logo" />
+      <Link to="/" className="flex justify-center items-center gap-2">
+        eComm<BsBagCheck size={30}/>
       </Link>
       <ul className="hidden md:flex items-center font-semibold text-sm">
         <li className="p-5">
